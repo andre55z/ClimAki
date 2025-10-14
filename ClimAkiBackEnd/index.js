@@ -48,13 +48,7 @@ app.get("/getWind", async (req, res)=>{
     }
 })
 
-app.get("/getRain", (req, res)=>{
-    try{
 
-    }catch(err){
-        
-    }
-})
 
 app.listen(PORT, ()=>{
 
