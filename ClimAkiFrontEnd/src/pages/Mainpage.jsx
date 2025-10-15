@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { getActualTemperature, getWind, isDay } from "../api";
+import { getActualTemperature, getWind, isDay, getHumidity, getProbPrec, getMaxTemp, getMinTemp } from "../api";
 import { useEffect } from "react";
+import { gettingData } from "../CustomHooks/CustomHooks";
+import MainTemp from "../components/MainTemp";
+import Sun from "../components/Animations/Sun";
+import LoadingPage from "./LoadingPage";
+import BoxTemp from "../components/BoxTemp";
 
 function Mainpage(){
+
+    const [loading, setLoading] = useState(true);
 
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
@@ -24,45 +31,66 @@ function Mainpage(){
             }
         }, []);
 
-        const[temperature, setTemperature] = useState("")
-        useEffect (()=>{ 
-            async function fetchTemp(){
-                const temp = await getActualTemperature(latitude, longitude)
-                setTemperature(temp)
-            }
-            fetchTemp();
-        }, [latitude, longitude]);
+        const temperature = gettingData(latitude, longitude, getActualTemperature);
+        const bgcDayOrNig = gettingData(latitude, longitude, isDay);
+        const wind = gettingData(latitude, longitude, getWind);
+        const relativeHumidity = gettingData(latitude, longitude, getHumidity);
+        const probPrec = gettingData(latitude, longitude, getProbPrec);
+        const maxTemp = gettingData(latitude, longitude, getMaxTemp);
+        const minTemp = gettingData(latitude, longitude, getMinTemp);
 
-        const [bgcDayOrNig, setBgcDayOrNig] = useState(null);
+        const [bgColor, setBgColor] = useState("");
+        const [ftColor, setFtColor] = useState("");
+        const [boxesColor, setBoxesColor] = useState(""); 
         useEffect(()=>{
-            async function fetchIsDay(){
-                const isd = await isDay(latitude, longitude);
-                setBgcDayOrNig(isd);
+            
+            if(probPrec >= 70){
+                setBgColor(" bg-rain ");
+                setFtColor(" font-color-rain ")
+                setBoxesColor(" rain-box-color ")
+                setLoading(false);
             }
-            fetchIsDay();
-        }, [latitude, longitude])
+            else{
+                if(bgcDayOrNig == 0){
+                    setBgColor(" bg-noite ")
+                    setFtColor(" font-color-noite ")
+                    setBoxesColor(" night-box-color ")
+                    setLoading(false);
 
-        const [wind, setWind] = useState("");
-        useEffect(()=>{
-            async function fetchWind(){
-                const windFetch = await getWind(latitude, longitude);
-                setWind(windFetch);
+                }
+                else{
+                    if(bgcDayOrNig == 1){
+                        setBgColor(" bg-dia ");
+                        setFtColor(" font-color-dia ")
+                        setBoxesColor(" day-box-color ")
+                        setLoading(false);
+
+                    }
+                    else{
+                        setBgColor(" bg-default ")
+                    }
+                }
             }
-            fetchWind();
-        }, [latitude, longitude])
-
-
-
-
-
+        }, [bgcDayOrNig, probPrec])
+        
     return(
-        <div className=" bg-default min-h-screen w-full flex flex-col items-center">
+        <div className={` ${bgColor} min-h-screen w-full flex flex-col items-center`}>
             {
-                !local && <h1 className="text-[150%] font-color-default lg:mt-[20%] mt-[60%] text-center p-[10%]">Permita o acesso a sua localização para a estimativa do clima na sua região</h1>
+                loading && <LoadingPage/>
             }
-            <h1>Temperatura: {temperature}</h1>
-            <h1>Éh dia: {bgcDayOrNig}</h1>
-            <h1>Vel do vento: {wind}</h1>
+            <div className="w-[80%] h-[50%] mt-[40%] flex flex-col items-center">
+                <div className="flex flex-col items-center gap-5">
+                    <Sun ClassName={"w-[50%]"}/>
+                    <MainTemp temperature={temperature} ClassName={`${ftColor} text-[500%]`}/>
+                </div>
+
+                <div className="flex flex-row items-center gap-5">
+                    <BoxTemp minMaxT={maxTemp} typeTemp={"maxT"} ClassName={`rounded-[20px] ${boxesColor} w-[100%] h-[300%]`} ClassNameTemp={`${ftColor} text-[200%]`} ClassNameHotArrow={`w-[15%]`}/>
+                    <BoxTemp minMaxT={minTemp} typeTemp={"minT"} ClassName={`rounded-[20px] ${boxesColor} w-[100%] h-[300%]`} ClassNameTemp={`${ftColor} text-[200%]`} ClassNameColdArrow={`w-[15%]`}/>
+
+                </div>
+            </div>
+
         </div>
     )
 }

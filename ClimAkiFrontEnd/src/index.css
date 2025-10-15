@@ -14,15 +14,15 @@
 @layer utilities{
 
     .bg-noite{
-        background-color: rgb(0, 8, 82);
+        background-color: #000852;
     }
 
     .bg-dia{
-        background-color: rgb(0, 153, 255);
+        background-color: #0099ff;
     }
 
     .bg-rain{
-        background-color: rgb(70, 104, 104);
+        background-color: #466868;
     }
 
     .font-color-noite{
@@ -43,5 +43,17 @@
 
     .font-color-default{
         color:#444444;
+    }
+
+    .day-box-color{
+        background-color: #BDE5FF;
+    }
+
+    .night-box-color{
+        background-color: #0016da;
+    }
+
+    .rain-box-color{
+        background-color: #8bcccc ;
     }
 }
