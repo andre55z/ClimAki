@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+
+
+:root{
+    --font-outfit: 'Outfit', sans-serif;
+}
+
+.font-outfit{
+    font-family: var(--font-outfit);
+}
+
+@layer utilities{
+
+    .bg-noite{
+        background-color: #000852;
+    }
+
+    .bg-dia{
+        background-color: #0099ff;
+    }
+
+    .bg-rain{
+        background-color: #466868;
+    }
+
+    .font-color-noite{
+        color:#dddef7;
+    }
+
+    .font-color-dia{
+        color:#13295f;
+    }
+
+    .font-color-rain{
+        color:#504eff;
+    }
+
+    .bg-default{
+        background-color: #d6d6d6;
+    }
+
+    .font-color-default{
+        color:#444444;
+    }
+
+    .day-box-color{
+        background-color: #BDE5FF;
+    }
+
+    .night-box-color{
+        background-color: #0016da;
+    }
+
+    .rain-box-color{
+        background-color: #8bcccc ;
+    }
+}
