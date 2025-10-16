@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3000";
+const API_URL = "https://climaki.onrender.com";
 
 export async function getActualTemperature(lat, long){
     try{
