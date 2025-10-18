@@ -89,6 +89,46 @@ app.get("/getMinTemp", async (req, res)=>{
     }
 })
 
+app.get("/getDays", async (req, res)=>{
+    try{
+        const {lat, long} = req.query;
+        const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,wind_speed_10m,relative_humidity_2m&current=is_day,temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&timezone=auto`);
+        res.json({days: response.data.daily.time})  
+    }catch(err){
+        console.log("Erro no back do vetor de dias: "+ err)
+    }
+})
+
+app.get("/getPredictMaxTemp", async (req, res)=>{
+    try{
+        const {lat, long} = req.query;
+        const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,wind_speed_10m,relative_humidity_2m&current=is_day,temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&timezone=auto`);
+        res.json({maxPT: response.data.daily.temperature_2m_max})  
+    }catch(err){
+        console.log("Erro no back do vetor de temperatura max: "+ err)
+    }
+})
+
+app.get("/getPredictMinTemp", async (req, res)=>{
+    try{
+        const {lat, long} = req.query;
+        const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,wind_speed_10m,relative_humidity_2m&current=is_day,temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&timezone=auto`);
+        res.json({minPT: response.data.daily.temperature_2m_min})  
+    }catch(err){
+        console.log("Erro no back do vetor de temperatura min: "+ err)
+    }
+})
+
+app.get("/getPredictPrec", async (req, res)=>{
+    try{
+        const {lat, long} = req.query;
+        const response = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&hourly=temperature_2m,precipitation_probability,wind_speed_10m,relative_humidity_2m&current=is_day,temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m&timezone=auto`);
+        res.json({predictPrec: response.data.daily.precipitation_probability_max})  
+    }catch(err){
+        console.log("Erro no back do vetor de precipitação: "+ err)
+    }
+})
+
 
 app.listen(PORT, ()=>{
 

@@ -56,4 +56,28 @@
     .rain-box-color{
         background-color: #8bcccc ;
     }
+
+    .header-color-day{
+        background-color: #081129;
+    }
+
+    .subheader-color-day{
+        background-color: #13295f;
+    }
+
+    .header-color-night{
+        background-color: #696eff;
+    }
+
+    .subheader-color-night{
+        background-color: #dddef7;
+    }
+
+    .header-color-rain{
+        background-color: #2e2d72;
+    }
+
+    .subheader-color-rain{
+        background-color: #504eff;
+    }
 }

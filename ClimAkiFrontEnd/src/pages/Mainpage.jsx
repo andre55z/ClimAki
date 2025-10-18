@@ -9,6 +9,7 @@ import BoxTemp from "../components/BoxTemp";
 import Moon from "../components/Animations/Moon";
 import BoxComlements from "../components/BoxComplements";
 import Rain from "../components/Animations/Rain";
+import BoxPredict from "../components/BoxPredict";
 
 function Mainpage(){
 
@@ -46,10 +47,17 @@ function Mainpage(){
         const [bgColor, setBgColor] = useState("");
         const [ftColor, setFtColor] = useState("");
         const [boxesColor, setBoxesColor] = useState("");
-        
+        const [headerColor, setHeaderColor] = useState("");
+        const [subHeaderColor, setSubHeaderColor] = useState("");
+
+
         const [dia, setDia] = useState(false);
         const [chuva, setChuva] = useState(false);
         useEffect(()=>{
+
+                if(probPrec === null || probPrec === undefined || bgcDayOrNig === null || bgcDayOrNig === undefined) {
+                    return; 
+                }       
             
             if(probPrec >= 70){
                 setBgColor(" bg-rain ");
@@ -57,6 +65,8 @@ function Mainpage(){
                 setBoxesColor(" rain-box-color ")
                 setLoading(false);
                 setChuva(true);
+                setHeaderColor(" header-color-rain")
+                setSubHeaderColor(" subheader-color-rain")
             }
             else{
                 if(bgcDayOrNig == 0){
@@ -64,6 +74,8 @@ function Mainpage(){
                     setFtColor(" font-color-noite ")
                     setBoxesColor(" night-box-color ")
                     setLoading(false);
+                    setHeaderColor(" header-color-night ")
+                    setSubHeaderColor(" subheader-color-night ")
                 }
                 else{
                     if(bgcDayOrNig == 1){
@@ -72,13 +84,15 @@ function Mainpage(){
                         setBoxesColor(" day-box-color ")
                         setLoading(false);
                         setDia(true);
+                        setHeaderColor(" header-color-day ")
+                        setSubHeaderColor(" subheader-color-day ")
                     }
                     else{
                         setBgColor(" bg-default ")
                     }
                 }
             }
-        }, [bgcDayOrNig, probPrec])
+        }, [probPrec, bgcDayOrNig])
         
     return(
         <div className={` ${bgColor} overflow-hidden min-h-screen w-full flex flex-col items-center`}>
@@ -91,7 +105,7 @@ function Mainpage(){
                     {dia 
                         ? <Sun ClassName={"w-[50%] mb-[10%] mt-[-10%]"}/> 
                         : chuva 
-                            ? <Rain ClassName={"w-[100%]"}/> 
+                            ? <Rain ClassName={"w-[100%] mt-[-20%]"}/> 
                             : <Moon ClassName={"w-[200%] mt-[-50%] lg:mt-[-90%] mb-[-35%] lg:mb-[-55%]"}/>
                         }
                     <MainTemp temperature={temperature} ClassName={`${ftColor} text-[500%] mt-[-10%] lg:mb-[-25%]`}/>
@@ -107,6 +121,10 @@ function Mainpage(){
                     <BoxComlements Data={probPrec} Emoji={"🌧️"} ClassName={`rounded-[20px] ${boxesColor} p-5 w-[90px] h-[90px] justify-center`} ClassNameData={`${ftColor} text-[120%]`} Medida={"%"}    ClassNameEmoji={"text-[120%]"}/>
                     <BoxComlements Data={relativeHumidity} Emoji={"💧"} ClassName={`rounded-[20px] ${boxesColor} w-[90px] h-[90px] justify-center`} ClassNameData={`${ftColor} text-[120%]`} Medida={"%"}    ClassNameEmoji={"text-[120%]"}/>
                     <BoxComlements Data={wind} Emoji={"🌀"} ClassName={`rounded-[20px] ${boxesColor} w-[90px] h-[90px] justify-center`} ClassNameData={`${ftColor} text-[100%] text-center`} Medida={"km/h"} ClassNameEmoji={"text-[120%]"}  />
+
+                </div>
+                <div className="flex lg:mt-0 mt-10">
+                    <BoxPredict BgcColor={boxesColor} lat={latitude} long={longitude} headerC={headerColor} subHeaderC={subHeaderColor}/>
 
                 </div>
             </div>}

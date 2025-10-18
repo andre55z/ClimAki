@@ -13,7 +13,17 @@ export function gettingData(latitude, longitude, getFunction){
         }
         
         fetchData();
-    }, [latitude, longitude, getFunction]);
+    }, [latitude, longitude]);
 
     return data;
+}
+
+export function dateFormatation(date) {
+    if (!date) return "";
+
+    const month = date.slice(5, 7); 
+    const day = date.slice(8, 10); 
+
+    const fullDate = `${day}/${month}`; 
+    return fullDate;
 }
