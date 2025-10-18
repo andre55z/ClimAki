@@ -33,7 +33,7 @@ export default function BoxPredict({BgcColor, lat, long, fontC, headerC}){
                     <img src={ColdArrow} className="w-[15px]"/>
                     🌧️
                 </div>
-                <div className="flex flex-row gap-9 pl-10">
+                <div className="flex flex-row gap-9 pl-0">
                     <div className=" text-center flex flex-col justify-center gap-10">
                         
                         
