@@ -94,6 +94,22 @@ export async function getMaxTemp(lat, long) {
     }
 }
 
+export async function getDays(lat, long) {
+    try{
+        console.log("passando lat e long para os dias futuros" + lat + long)
+        const response = await axios.get(`${API_URL}/getDays`, {
+            params:{
+                lat:lat,
+                long:long
+            }
+        })
+        return response.data.days
+
+    }catch(err){
+        console.log("Erro ao obter a temperatura max: " + err)
+    }
+}
+
 export async function getMinTemp(lat, long) {
     try{
         console.log("passando lat e long" + lat + long)
@@ -107,5 +123,53 @@ export async function getMinTemp(lat, long) {
 
     }catch(err){
         console.log("Erro ao obter a temperatura min: " + err)
+    }
+}
+
+export async function getPredictMaxTemp(lat, long) {
+    try{
+        console.log("passando lat e long para os dias futuros" + lat + long)
+        const response = await axios.get(`${API_URL}/getPredictMaxTemp`, {
+            params:{
+                lat:lat,
+                long:long
+            }
+        })
+        return response.data.maxPT
+
+    }catch(err){
+        console.log("Erro ao obter a temperatura max: " + err)
+    }
+}
+
+export async function getPredictMinTemp(lat, long) {
+    try{
+        console.log("passando lat e long para os dias futuros" + lat + long)
+        const response = await axios.get(`${API_URL}/getPredictMinTemp`, {
+            params:{
+                lat:lat,
+                long:long
+            }
+        })
+        return response.data.minPT
+
+    }catch(err){
+        console.log("Erro ao obter a temperatura max: " + err)
+    }
+}
+
+export async function getPredictPrec(lat, long) {
+    try{
+        console.log("passando lat e long para os dias futuros" + lat + long)
+        const response = await axios.get(`${API_URL}/getPredictPrec`, {
+            params:{
+                lat:lat,
+                long:long
+            }
+        })
+        return response.data.predictPrec
+
+    }catch(err){
+        console.log("Erro ao obter a temperatura max: " + err)
     }
 }
