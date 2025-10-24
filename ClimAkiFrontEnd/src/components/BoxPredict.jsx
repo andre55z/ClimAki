@@ -26,7 +26,7 @@ export default function BoxPredict({BgcColor, lat, long, fontC, headerC}){
         <>
             <div className={`flex flex-col  gap-10  w-[370px] h-[600px] mb-5 rounded-[30px] ${BgcColor} font-outfit`} >
                 <div className={`${headerC} flex flex-col p-5 items-center rounded-t-[30px]`}>
-                    <h1 className={`${fontC} text-[15px] text-center `}> Previsão do tempo para os próximos dias</h1>
+                    <h1 className={`font-black text-[15px] text-center `}> Previsão do tempo para os próximos dias</h1>
                 </div>
                 <div className={` w-[100%] flex flex-row justify-center gap-16 pl-[70px] `}>
                     <img src={HotArrow} className="w-[15px]"/>  
